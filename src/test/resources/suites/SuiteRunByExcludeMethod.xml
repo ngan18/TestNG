@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="SuiteRunByExcludeMethod" verbose="1">
+    <test name="FirstTest">
+        <classes>
+            <class name="package1.firstClass">
+                <methods>
+                    <exclude name="fourthTest"/>
+
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

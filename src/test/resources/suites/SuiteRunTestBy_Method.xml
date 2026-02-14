@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<!--suppress ALL -->
+<suite name="SuiteRunByMethod" verbose="1">
+    <test name="version 1">
+        <classes>
+            <class name="package1.firstClass"/>
+            <class name="package1.secondClass"/>
+        </classes>
+    </test>
+
+    <test name="version 2">
+        <classes>
+            <class name="package1.firstClass"/>
+            <class name="package1.secondClass"/>
+        </classes>
+    </test>
+</suite>
