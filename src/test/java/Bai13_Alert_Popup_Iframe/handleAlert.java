@@ -1,13 +1,12 @@
 package Bai13_Alert_Popup_Iframe;
 
+import common.BaseTest;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static common.BaseTest.driver;
-
-public class handleAlert {
+public class handleAlert extends BaseTest {
         @Test
         public void demoHandleAlertAccept() throws InterruptedException {
             driver.get("https://www.lambdatest.com/selenium-playground/javascript-alert-box-demo");

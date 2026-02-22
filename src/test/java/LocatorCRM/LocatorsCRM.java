@@ -3,6 +3,9 @@ package LocatorCRM;
 public class LocatorsCRM {
     public static String url = "https://crm.anhtester.com/admin/authentication";
 
+    // locators for Dashboard page
+    public static String number_ProjectsInProgress= "//span[normalize-space()=\"Projects In Progress\"]/parent::div/following-sibling::span";
+
     //Locators for Login Page
     public static String headerLoginPage = "//h1[normalize-space()='Login']";
     public static String inputEmail = "//input[@id='email']";
@@ -85,5 +88,6 @@ public class LocatorsCRM {
     public static String inputSearchCountry = "//button[contains(@data-id,'country')]/following-sibling::div//input[@type='search']";
 
     public static String buttonSave = "//div[@id='profile-save-section']//button[normalize-space()='Save']";
+
 
 }

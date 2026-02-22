@@ -1,14 +1,13 @@
 package Bai13_Alert_Popup_Iframe;
 
+import common.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WindowType;
 import org.testng.annotations.Test;
 
 import java.util.Set;
 
-import static common.BaseTest.driver;
-
-public class handlePopup {
+public class handlePopup extends BaseTest {
     @Test
     public void demoOpenNewTab() throws InterruptedException {
         driver.get("https://anhtester.com");

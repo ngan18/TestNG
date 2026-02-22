@@ -1,11 +1,10 @@
 package Bai13_Alert_Popup_Iframe;
 
+import common.BaseTest;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
-import static common.BaseTest.driver;
-
-public class handleiframe {
+public class handleiframe extends BaseTest {
     @Test
     public void demoHandleIFrame() throws InterruptedException {
 

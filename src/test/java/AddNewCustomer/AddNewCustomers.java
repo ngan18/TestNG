@@ -5,11 +5,8 @@ import common.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class AddNewCustomers extends BaseTest {
-    public static void loginCRM() {
+    public  void loginCRM() {
         driver.get(LocatorsCRM.url);
         driver.findElement(By.xpath(LocatorsCRM.inputEmail)).clear();
         driver.findElement(By.xpath(LocatorsCRM.inputEmail)).sendKeys("admin@example.com");
@@ -19,13 +16,13 @@ public class AddNewCustomers extends BaseTest {
         // Verify login success
     }
 
-    public static void openNewCustomerPage() {
+    public void openNewCustomerPage() {
         driver.findElement(By.xpath(LocatorsCRM.menuCustomers)).click();
         driver.findElement(By.xpath(LocatorsCRM.buttonNewCustomer)).click();
         // Verify New Customer page is opened
     }
 
-    public static void addNewCustomer(String customerName) throws InterruptedException {
+    public void addNewCustomer(String customerName) throws InterruptedException {
         driver.findElement(By.xpath(LocatorsCRM.inputCompany)).sendKeys(customerName);
         driver.findElement(By.xpath(LocatorsCRM.inputVatNumber)).sendKeys("10");
         driver.findElement(By.xpath(LocatorsCRM.inputPhone)).sendKeys("0912345678");
@@ -70,7 +67,7 @@ public class AddNewCustomers extends BaseTest {
         Thread.sleep(2000);
     }
 
-    public static void searchCustomer(String customerName) throws InterruptedException {
+    public void searchCustomer(String customerName) throws InterruptedException {
         driver.findElement(By.xpath(LocatorsCRM.menuCustomers)).click();
         driver.findElement(By.xpath(LocatorsCRM.inputSearchCustomer)).clear();
         driver.findElement(By.xpath(LocatorsCRM.inputSearchCustomer)).sendKeys(customerName);
@@ -81,35 +78,35 @@ public class AddNewCustomers extends BaseTest {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        createDriver();
-
-        loginCRM();
-        //openNewCustomerPage();
-        driver.findElement(By.xpath(LocatorsCRM.menuCustomers)).click();
-
-        int customerTotal = Integer.parseInt(driver.findElement(By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span")).getText());
-        System.out.println("Total Customers: " + customerTotal);
-
-        driver.findElement(By.xpath(LocatorsCRM.buttonNewCustomer)).click();
-
-
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        String formatted = now.format(formatter);
-        System.out.println("Định dạng: " + formatted);
-
-        addNewCustomer("Test Company " + formatted);
-        searchCustomer("Test Company " + formatted);
-
-        int customerTotalAfterAddNew = Integer.parseInt(driver.findElement(By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span")).getText());
-        System.out.println("Total Customers After Add New: " + customerTotalAfterAddNew);
-
-        if (customerTotalAfterAddNew == (customerTotal+1)) {
-            System.out.println("Customer total is correct!");
-        } else {
-            System.out.println("Failed Customer total is correct. Not equal to " + (customerTotal + 1));
-        }
-
-        closeDriver();
+//        createDriver();
+//
+//        loginCRM();
+//        //openNewCustomerPage();
+//        driver.findElement(By.xpath(LocatorsCRM.menuCustomers)).click();
+//
+//        int customerTotal = Integer.parseInt(driver.findElement(By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span")).getText());
+//        System.out.println("Total Customers: " + customerTotal);
+//
+//        driver.findElement(By.xpath(LocatorsCRM.buttonNewCustomer)).click();
+//
+//
+//        LocalDateTime now = LocalDateTime.now();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+//        String formatted = now.format(formatter);
+//        System.out.println("Định dạng: " + formatted);
+//
+//        addNewCustomer("Test Company " + formatted);
+//        searchCustomer("Test Company " + formatted);
+//
+//        int customerTotalAfterAddNew = Integer.parseInt(driver.findElement(By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span")).getText());
+//        System.out.println("Total Customers After Add New: " + customerTotalAfterAddNew);
+//
+//        if (customerTotalAfterAddNew == (customerTotal+1)) {
+//            System.out.println("Customer total is correct!");
+//        } else {
+//            System.out.println("Failed Customer total is correct. Not equal to " + (customerTotal + 1));
+//        }
+//
+//        closeDriver();
     }
 }
