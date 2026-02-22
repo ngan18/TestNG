@@ -19,8 +19,8 @@ public class LoginPage extends BasePage {
     }
 
     //Khai báo đối tượng element thuộc về trang Login
-    private By headerLoginPage = By.xpath("");
-    private By checkboxRememberMe = By.xpath("");
+    private By headerLoginPage = By.xpath("//h1[normalize-space()='Login']");
+    private By checkboxRememberMe = By.xpath("//input[@id='remember']");
     private By linkForgotPassword = By.xpath("//a[normalize-space()='Forgot Password?']");
     private By inputEmail = By.xpath("//input[@id='email']");
     private By inputPassword = By.xpath("//input[@id='password']");
@@ -38,7 +38,7 @@ public class LoginPage extends BasePage {
 
     public void navigateToLoginAdminPage() {
         WebUI.openURL(url_login_admin);
-        WebUI.waitForPageLoad();
+        WebUI.waitForPageLoaded();
     }
 
     private void enterEmail(String email) {
@@ -58,7 +58,7 @@ public class LoginPage extends BasePage {
         enterEmail(email);
         enterPassword(password);
         clickLoginButton();
-        WebUI.waitForPageLoad();
+        WebUI.waitForPageLoaded();
     }
 
     public DashboardPage loginCRM() {
@@ -66,15 +66,15 @@ public class LoginPage extends BasePage {
         enterEmail("admin@example.com");
         enterPassword("123456");
         clickLoginButton();
-        WebUI.waitForPageLoad();
+        WebUI.waitForPageLoaded();
         verifyLoginSuccess();
 
         return new DashboardPage(driver);
     }
 
     public void verifyLoginSuccess() {
-        boolean check = WebUI.checkElementExist(By.xpath("//span[normalize-space()='Dashboard']"), 5, 1000);
-        Assert.assertTrue(check, "Login failed or Dashboard not displayed.");
+        boolean check = WebUI.checkElementExist(By.xpath("//span[normalize-space()='Dashboard']"),5,1000);
+        Assert.assertTrue(check, "Login failed or not on dashboard page.");
     }
 
     public void verifyLoginFailureWithEmailOrPasswordInvalid() {

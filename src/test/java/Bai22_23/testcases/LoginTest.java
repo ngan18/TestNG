@@ -17,6 +17,7 @@ public class LoginTest extends BaseTest {
         loginPage = new LoginPage(driver);
 
         loginPage.loginCRM("admin@example.com", "123456");
+        loginPage.verifyLoginPageDisplayed();
         loginPage.verifyLoginSuccess();
     }
 
@@ -24,7 +25,7 @@ public class LoginTest extends BaseTest {
     public void testLoginFailureWithEmailInvalid() {
         loginPage = new LoginPage(driver);
 
-        loginPage.loginCRM("admin@example", "123456");
+        loginPage.loginCRM("admin", "123456");
 
         loginPage.verifyLoginFailureWithEmailOrPasswordInvalid();
     }
