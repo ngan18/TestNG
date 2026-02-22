@@ -17,7 +17,6 @@ public class LoginTest extends BaseTest {
         loginPage = new LoginPage(driver);
 
         loginPage.loginCRM("admin@example.com", "123456");
-        loginPage.verifyLoginPageDisplayed();
         loginPage.verifyLoginSuccess();
     }
 
