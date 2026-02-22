@@ -78,17 +78,17 @@ public class LoginPage extends BasePage {
     }
 
     public void verifyLoginFailureWithEmailOrPasswordInvalid() {
-        boolean check = WebUI.checkElementExist(errorMessageInvalid);
+        boolean check = WebUI.checkElementExist(errorMessageInvalid,5,1000);
         Assert.assertTrue(check, "Error message for invalid email not displayed.");
     }
 
     public void verifyLoginFailureWithEmailNull() {
-        boolean check = WebUI.checkElementExist(errorMessageRequiredEmail);
+        boolean check = WebUI.checkElementExist(errorMessageRequiredEmail,5,1000);
         Assert.assertTrue(check, "Error message for required email not displayed.");
     }
 
     public void verifyLoginFailureWithPasswordNull() {
-        boolean check = WebUI.checkElementExist(errorMessageRequiredPassword);
+        boolean check = WebUI.checkElementExist(errorMessageRequiredPassword,5,1000);
         Assert.assertTrue(check, "Error message for required password not displayed.");
     }
 
