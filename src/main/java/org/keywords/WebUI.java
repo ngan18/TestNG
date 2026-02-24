@@ -1,11 +1,14 @@
 package org.keywords;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.util.List;
 
@@ -157,6 +160,7 @@ public class WebUI {
             try {
                 wait.until(jsLoad);
             } catch (Throwable error) {
+                //noinspection CallToPrintStackTrace
                 error.printStackTrace();
                 Assert.fail("FAILED. Timeout waiting for page load.");
             }
@@ -200,6 +204,7 @@ public class WebUI {
                 try {
                     Thread.sleep(waitTimeMillis); // Chờ trước khi thử lại
                 } catch (InterruptedException ie) {
+                    //noinspection CallToPrintStackTrace
                     ie.printStackTrace();
                 }
             }
@@ -208,6 +213,37 @@ public class WebUI {
         // Trả về false nếu không tìm thấy phần tử sau maxRetries lần
         logConsole("Không tìm thấy phần tử sau " + maxRetries + " lần thử.");
         return false;
+    }
+
+    //cách 2 dùng for : Hàm kiểm tra sự tồn tại của phần tử với lặp lại nhiều lần
+    public static boolean kiemTraElementTontai(By by, int maxRetries, int waitTimeMillis) {
+        {
+            int retryCount = 0;
+            for (int i = 0; i < maxRetries; i++) {
+                try {
+                    WebElement element = getWebElement(by);
+                    //noinspection ConstantValue
+                    if (element != null) {
+                        {
+                            System.out.println("Tìm thấy phần tử ở lần thử thứ " + (retryCount + 1));
+                            return true; // Phần tử được tìm thấy
+                        }
+                    }
+                } catch (NoSuchElementException e) {
+                    System.out.println("Không tìm thấy phần tử. Thử lại lần " + (retryCount + 1));
+                    retryCount++;
+                    try {
+                        Thread.sleep(waitTimeMillis); // Chờ trước khi thử lại
+
+                    } catch (InterruptedException ie) {
+                        //noinspection CallToPrintStackTrace
+                        ie.printStackTrace();
+                    }
+                }
+            }
+            logConsole("Không tìm thấy phần tử sau " + maxRetries + " lần thử.");
+            return false; // Trả về false nếu không tìm thấy phần tử sau maxRetries lần
+        }
     }
 
     public static void openURL(String url) {
@@ -263,6 +299,197 @@ public class WebUI {
         String value = getWebElement(by).getCssValue(cssPropertyName);
         System.out.println("==> CSS value: " + value);
         return value;
+    }
+    public static void srollToElement(By by) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
+        logConsole("Scrolled to element " + by);
+    }
+
+    public static  void scrollToElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(false);", element);
+        logConsole("Scrolled to element " + element);
+
+    }
+
+    public static void scrollToTop(By by) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", getWebElement(by));
+        logConsole("Scrolled to top of the page.");
+    }
+
+     public static void scrollToBottom(By by) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
+        logConsole("Scrolled to bottom of the page.");
+    }
+
+    public static void scrollToTop(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);",element);
+        logConsole("Scrolled to top of the page.");
+    }
+
+     public static void scrollToBottom(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(false);", element);
+        logConsole("Scrolled to bottom of the page.");
+    }
+
+    public static void srollToPosition(int x, int y) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(" + x + ", " + y + ");");
+        logConsole("Scrolled to position (" + x + ", " + y + ").");
+    }
+
+     public static void scrollToElementAndClick(By by) {
+        WebElement element = waitForElementToBeClickable(by);
+        scrollToElement(element);
+        element.click();
+        logConsole("Scrolled to element and clicked: " + by);
+    }
+
+     public static void scrollToElementAndClick(int x, int y) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(" + x + ", " + y + ");");
+        logConsole("Scrolled to position (" + x + ", " + y + ") and clicked.");
+     }
+
+     public static boolean moveToElement(By by) {
+        try {
+            Actions actions = new Actions(driver);
+            actions.moveToElement(getWebElement(by)).perform();
+            return true;
+        } catch (Throwable error) {
+            logConsole("Failed to move to element " + by);
+            return false;
+
+        }
+     }
+
+     public static boolean moveToOffset(int xOffset, int yOffset) {
+        try {
+            Actions actions = new Actions(driver);
+            actions.moveByOffset(xOffset, yOffset).perform();
+            return true;
+        } catch (Throwable error) {
+            logConsole("Failed to move to offset (" + xOffset + ", " + yOffset + ")");
+            return false;
+        }
+     }
+    public static boolean hoverElement(By by) {
+        try {
+            Actions action = new Actions(driver);
+            action.moveToElement(getWebElement(by)).perform();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean mouseHover(By by) {
+        try {
+            Actions action = new Actions(driver);
+            action.moveToElement(getWebElement(by)).perform();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean dragAndDrop(By fromElement, By toElement) {
+        try {
+            Actions action = new Actions(driver);
+            action.dragAndDrop(getWebElement(fromElement), getWebElement(toElement)).perform();
+            //action.clickAndHold(getWebElement(fromElement)).moveToElement(getWebElement(toElement)).release(getWebElement(toElement)).build().perform();
+            return true;
+        } catch (Exception e) {
+            logConsole(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean dragAndDropElement(By fromElement, By toElement) {
+        try {
+            Actions action = new Actions(driver);
+            action.clickAndHold(getWebElement(fromElement)).moveToElement(getWebElement(toElement)).release(getWebElement(toElement)).build().perform();
+            return true;
+        } catch (Exception e) {
+            logConsole(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean dragAndDropOffset(By fromElement, int X, int Y) {
+        try {
+            Actions action = new Actions(driver);
+            //Tính từ vị trí click chuột đầu tiên (clickAndHold)
+            action.clickAndHold(getWebElement(fromElement)).pause(1).moveByOffset(X, Y).release().build().perform();
+            return true;
+        } catch (Exception e) {
+            logConsole(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean pressENTER() {
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean pressESC() {
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_ESCAPE);
+            robot.keyRelease(KeyEvent.VK_ESCAPE);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean pressF11() {
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_F11);
+            robot.keyRelease(KeyEvent.VK_F11);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean verifyEquals(Object actual, Object expected) {
+
+        System.out.println("Verify equals: " + actual + " and " + expected);
+        boolean check = actual.equals(expected);
+        return check;
+    }
+
+    public static void assertEquals(Object actual, Object expected, String message) {
+
+        System.out.println("Assert equals: " + actual + " and " + expected);
+        Assert.assertEquals(actual, expected, message);
+    }
+
+    public static boolean verifyContains(String actual, String expected) {
+        System.out.println("Verify contains: " + actual + " and " + expected);
+        //noinspection UnnecessaryLocalVariable
+        boolean check = actual.contains(expected);
+        return check;
+    }
+
+    public static void assertContains(String actual, String expected, String message) {
+        System.out.println("Assert contains: " + actual + " and " + expected);
+        boolean check = actual.contains(expected);
+        Assert.assertTrue(check, message);
     }
 
 }
